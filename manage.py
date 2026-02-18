@@ -1,6 +1,12 @@
 import os
 import sys
 
+# Esto asegura que la app Celery se inicialice cuando Django arranca,
+try:
+    from config.celery_app import app as celery_app  # noqa: F401
+except Exception:
+    pass
+
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
