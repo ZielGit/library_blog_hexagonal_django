@@ -1,0 +1,48 @@
+# ── Entorno y secretos ────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.so
+
+# ── Virtualenv ────────────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── Django ────────────────────────────────────────────────────
+db.sqlite3
+db.sqlite3-journal
+*.log
+/static/
+/media/
+/staticfiles/
+
+# ── Tests y Coverage ──────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# ── IDEs ──────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# ── Docker ────────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ── Celery ────────────────────────────────────────────────────
+celerybeat-schedule
+celerybeat.pid
