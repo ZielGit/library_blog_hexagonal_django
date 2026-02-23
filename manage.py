@@ -1,7 +1,11 @@
+#!/usr/bin/env python
+"""Punto de entrada de Django."""
 import os
 import sys
 
 # Esto asegura que la app Celery se inicialice cuando Django arranca,
+# lo que es necesario para que las tareas se registren correctamente.
+# Ref: https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html
 try:
     from config.celery_app import app as celery_app  # noqa: F401
 except Exception:
