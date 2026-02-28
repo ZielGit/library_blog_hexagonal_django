@@ -143,3 +143,9 @@ def get_refresh_token_handler():
         user_repo=get_user_repo(),
         token_service=get_token_service(),
     )
+
+
+def get_user_profile_handler():
+    """Handler para obtener perfil de usuario."""
+    from src.application.users.queries.user_queries import GetUserProfileQueryHandler
+    return GetUserProfileQueryHandler(user_repo=get_user_repo())
