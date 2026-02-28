@@ -195,3 +195,31 @@ class User(Entity):
 
     def __repr__(self) -> str:
         return f"User(id={self._id}, email={self._email!r}, role={self._role.value})"
+
+    # ── Factory para reconstrucción desde persistencia ─────────
+    @classmethod
+    def reconstitute(
+        cls,
+        id: UUID,
+        email: str,
+        username: str,
+        hashed_password: str,
+        role: str,
+        status: str,
+        created_at: datetime,
+        last_login: datetime | None,
+    ) -> "User":
+        """
+        Reconstruye una entidad User desde la persistencia sin validaciones.
+        Usado por el repositorio al hidratar desde la base de datos.
+        """
+        user = cls.__new__(cls)  # crea instancia sin llamar __init__
+        user._id = id
+        user._email = email
+        user._username = username
+        user._hashed_password = hashed_password
+        user._role = UserRole(role)
+        user._status = UserStatus(status)
+        user._created_at = created_at
+        user._last_login = last_login
+        return user
