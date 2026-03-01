@@ -8,7 +8,6 @@ from dataclasses import dataclass
 from uuid import UUID
 
 from src.domain.users.repositories import UserRepository
-from src.application.dtos import BaseDTO
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -16,7 +15,7 @@ from src.application.dtos import BaseDTO
 # ═══════════════════════════════════════════════════════════════
 
 @dataclass(frozen=True)
-class UserProfileDTO(BaseDTO):
+class UserProfileDTO:
     """DTO con información completa del perfil de usuario."""
     id: UUID
     email: str
