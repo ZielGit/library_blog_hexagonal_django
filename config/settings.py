@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     # Third party
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_spectacular",  # OpenAPI/Swagger docs
     # Apps internas (solo los modelos ORM viven aquí)
     "src.infrastructure.persistence",
 ]
@@ -96,6 +97,46 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
+    # OpenAPI schema generation
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+# ─────────────────────────────────────────────────────────────
+# DRF-SPECTACULAR (OpenAPI/Swagger)
+# Docs: https://drf-spectacular.readthedocs.io/
+# ─────────────────────────────────────────────────────────────
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Library Blog API",
+    "DESCRIPTION": (
+        "API REST con arquitectura hexagonal para gestión de blog y biblioteca."
+    ),
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # Seguridad JWT
+    "SECURITY": [{"bearerAuth": []}],
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SCHEMA_PATH_PREFIX": "/api",
+    # Custom auth scheme para JWT
+    "APPEND_COMPONENTS": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": (
+                    "JWT access token obtenido del endpoint /api/auth/login/.\n\n"
+                    "Formato: `Bearer <access_token>`"
+                ),
+            }
+        }
+    },
+    # Personalización UI
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": False,
+        "filter": True,
+    },
 }
 
 # ─────────────────────────────────────────────────────────────
