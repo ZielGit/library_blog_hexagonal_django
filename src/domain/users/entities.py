@@ -138,6 +138,23 @@ class User(Entity):
         return self._status == UserStatus.ACTIVE
 
     @property
+    def is_authenticated(self) -> bool:
+        """
+        Propiedad requerida por Django REST Framework.
+        Siempre retorna True porque si llegamos aquí es porque
+        el token ya fue verificado exitosamente.
+        """
+        return True
+
+    @property
+    def is_anonymous(self) -> bool:
+        """
+        Propiedad requerida por Django REST Framework.
+        Siempre retorna False (inverso de is_authenticated).
+        """
+        return False
+
+    @property
     def is_admin(self) -> bool:
         return self._role == UserRole.ADMIN
 
