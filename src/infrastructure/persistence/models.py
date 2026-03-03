@@ -99,3 +99,44 @@ class CommentModel(models.Model):
 
     def __str__(self):
         return f"Comment by {self.author_id} on post {self.post_id}"
+
+
+# ══════════════════════════════════════════════════════════════
+# USER MODELS
+# ══════════════════════════════════════════════════════════════
+
+class UserModel(models.Model):
+    """
+    Tabla de usuarios del sistema.
+    No usa AbstractUser de Django — gestionamos auth con JWT propio.
+    Si prefieres usar Django auth, puedes extender AbstractUser aquí.
+    """
+
+    ROLE_CHOICES = [
+        ("admin", "Administrador"),
+        ("editor", "Editor"),
+        ("reader", "Lector"),
+    ]
+
+    STATUS_CHOICES = [
+        ("active", "Activo"),
+        ("inactive", "Inactivo"),
+        ("banned", "Baneado"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True, db_index=True)
+    username = models.CharField(max_length=50, unique=True, db_index=True)
+    hashed_password = models.CharField(max_length=255)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="reader")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="active")
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        app_label = "persistence"
+        db_table = "users"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.username} <{self.email}> [{self.role}]"
