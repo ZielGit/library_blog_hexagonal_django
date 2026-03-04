@@ -102,6 +102,93 @@ class CommentModel(models.Model):
 
 
 # ══════════════════════════════════════════════════════════════
+# LIBRARY MODELS
+# ══════════════════════════════════════════════════════════════
+
+class AuthorModel(models.Model):
+    """Tabla de Autores de libros."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=200)
+    bio = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        app_label = "persistence"
+        db_table = "library_authors"
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class BookModel(models.Model):
+    """Tabla de Libros de la biblioteca."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    isbn = models.CharField(max_length=13, unique=True, db_index=True)
+    title = models.CharField(max_length=300)
+    author = models.ForeignKey(
+        AuthorModel,
+        on_delete=models.PROTECT,
+        related_name="books",
+    )
+    description = models.TextField(blank=True)
+    total_copies = models.PositiveIntegerField(default=1)
+    available_copies = models.PositiveIntegerField(default=1)
+    published_year = models.PositiveIntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        app_label = "persistence"
+        db_table = "library_books"
+        ordering = ["title"]
+        indexes = [
+            models.Index(fields=["available_copies"]),
+        ]
+
+    def __str__(self):
+        return f"{self.title} (ISBN: {self.isbn})"
+
+
+class LoanModel(models.Model):
+    """Tabla de Préstamos de libros."""
+
+    STATUS_CHOICES = [
+        ("active", "Activo"),
+        ("returned", "Devuelto"),
+        ("overdue", "Vencido"),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    book = models.ForeignKey(
+        BookModel,
+        on_delete=models.PROTECT,
+        related_name="loans",
+    )
+    user_id = models.UUIDField(db_index=True)
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="active",
+        db_index=True,
+    )
+    loaned_at = models.DateTimeField()
+    due_date = models.DateTimeField(db_index=True)
+    returned_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        app_label = "persistence"
+        db_table = "library_loans"
+        ordering = ["-loaned_at"]
+        indexes = [
+            models.Index(fields=["user_id", "status"]),
+            models.Index(fields=["status", "due_date"]),
+        ]
+
+    def __str__(self):
+        return f"Loan {self.id} — book {self.book_id} to user {self.user_id} [{self.status}]"
+
+
+# ══════════════════════════════════════════════════════════════
 # USER MODELS
 # ══════════════════════════════════════════════════════════════
 
