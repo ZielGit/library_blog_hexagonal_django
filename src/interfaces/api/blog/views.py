@@ -25,6 +25,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from .swagger_schemas import (
+    create_post_schema,
+    publish_post_schema,
+    archive_post_schema,
+    add_comment_schema,
+)
 
 from config.container import (
     get_create_post_handler,
@@ -42,6 +48,7 @@ from src.application.blog.commands.archive_post import ArchivePostCommand
 from src.application.blog.queries.get_post import GetPostBySlugQuery
 from src.application.blog.queries.list_posts import ListPublishedPostsQuery, ListPostsByAuthorQuery
 from src.domain.shared.base import DomainError, NotFoundError
+from src.infrastructure.auth.drf_jwt_authentication import JWTAuthentication as JWTAuth
 
 
 # ─────────────────────────────────────────────────────────────
@@ -62,8 +69,9 @@ def handle_domain_error(exc: Exception) -> Response:
 class PostListCreateView(APIView):
     """
     GET  /api/posts/         → Lista posts publicados (paginado)
-    POST /api/posts/         → Crea un nuevo post (requiere auth)
+    POST /api/posts/         → Crea un nuevo post (requiere auth JWT)
     """
+    authentication_classes = [JWTAuth]
 
     def get_permissions(self):
         if self.request.method == "POST":
@@ -98,6 +106,7 @@ class PostListCreateView(APIView):
             "has_previous": result.has_previous,
         })
 
+    @create_post_schema
     def post(self, request):
         try:
             command = CreatePostCommand(
@@ -161,13 +170,15 @@ class PostPublishView(APIView):
     """
     POST /api/posts/<post_id>/publish/  → Publica un post
     """
+    authentication_classes = [JWTAuth]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id: str):
+    @publish_post_schema
+    def post(self, request, post_id):
         try:
             command = PublishPostCommand(
-                post_id=UUID(post_id),
-                requesting_author_id=UUID(str(request.user.id)),
+                post_id=post_id,
+                requesting_author_id=request.user.id,
             )
             handler = get_publish_post_handler()
             handler.handle(command)
@@ -180,13 +191,15 @@ class PostArchiveView(APIView):
     """
     POST /api/posts/<post_id>/archive/  → Archiva un post
     """
+    authentication_classes = [JWTAuth]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id: str):
+    @archive_post_schema
+    def post(self, request, post_id):  # ← ya viene como UUID
         try:
             command = ArchivePostCommand(
-                post_id=UUID(post_id),
-                requesting_author_id=UUID(str(request.user.id)),
+                post_id=post_id,  # ← ya es UUID
+                requesting_author_id=request.user.id,  # ← ya es UUID
             )
             handler = get_archive_post_handler()
             handler.handle(command)
@@ -199,14 +212,16 @@ class CommentCreateView(APIView):
     """
     POST /api/posts/<post_id>/comments/  → Añade comentario
     """
+    authentication_classes = [JWTAuth]
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id: str):
+    @add_comment_schema
+    def post(self, request, post_id):  # ← ya viene como UUID
         try:
             command = AddCommentCommand(
-                post_id=UUID(post_id),
+                post_id=post_id,  # ← ya es UUID
                 body=request.data.get("body", ""),
-                commenter_id=UUID(str(request.user.id)),
+                commenter_id=request.user.id,  # ← ya es UUID
             )
             handler = get_add_comment_handler()
             result = handler.handle(command)
@@ -229,10 +244,10 @@ class AuthorPostsView(APIView):
     """
     permission_classes = [AllowAny]
 
-    def get(self, request, author_id: str):
+    def get(self, request, author_id):  # ← ya viene como UUID
         try:
             query = ListPostsByAuthorQuery(
-                author_id=UUID(author_id),
+                author_id=author_id,  # ← ya es UUID
                 page=int(request.query_params.get("page", 1)),
                 page_size=int(request.query_params.get("page_size", 10)),
             )
