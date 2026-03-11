@@ -195,11 +195,11 @@ class PostArchiveView(APIView):
     permission_classes = [IsAuthenticated]
 
     @archive_post_schema
-    def post(self, request, post_id):  # ← ya viene como UUID
+    def post(self, request, post_id):
         try:
             command = ArchivePostCommand(
-                post_id=post_id,  # ← ya es UUID
-                requesting_author_id=request.user.id,  # ← ya es UUID
+                post_id=post_id,
+                requesting_author_id=request.user.id,
             )
             handler = get_archive_post_handler()
             handler.handle(command)
@@ -216,12 +216,12 @@ class CommentCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     @add_comment_schema
-    def post(self, request, post_id):  # ← ya viene como UUID
+    def post(self, request, post_id):
         try:
             command = AddCommentCommand(
-                post_id=post_id,  # ← ya es UUID
+                post_id=post_id,
                 body=request.data.get("body", ""),
-                commenter_id=request.user.id,  # ← ya es UUID
+                commenter_id=request.user.id,
             )
             handler = get_add_comment_handler()
             result = handler.handle(command)
@@ -244,10 +244,10 @@ class AuthorPostsView(APIView):
     """
     permission_classes = [AllowAny]
 
-    def get(self, request, author_id):  # ← ya viene como UUID
+    def get(self, request, author_id):
         try:
             query = ListPostsByAuthorQuery(
-                author_id=author_id,  # ← ya es UUID
+                author_id=author_id,
                 page=int(request.query_params.get("page", 1)),
                 page_size=int(request.query_params.get("page_size", 10)),
             )
