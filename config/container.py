@@ -149,3 +149,50 @@ def get_user_profile_handler():
     """Handler para obtener perfil de usuario."""
     from src.application.users.queries.user_queries import GetUserProfileQueryHandler
     return GetUserProfileQueryHandler(user_repo=get_user_repo())
+
+
+# ══════════════════════════════════════════════════════════════
+# LIBRARY MODULE
+# ══════════════════════════════════════════════════════════════
+
+def get_author_repo():
+    from src.infrastructure.persistence.django_library_repo import DjangoAuthorRepository
+    return DjangoAuthorRepository()
+
+def get_book_repo():
+    from src.infrastructure.persistence.django_library_repo import DjangoBookRepository
+    return DjangoBookRepository()
+
+def get_loan_repo():
+    from src.infrastructure.persistence.django_library_repo import DjangoLoanRepository
+    return DjangoLoanRepository()
+
+# Commands
+def get_create_author_handler():
+    from src.application.library.commands.author_commands import CreateAuthorCommandHandler
+    return CreateAuthorCommandHandler(author_repo=get_author_repo())
+
+def get_create_book_handler():
+    from src.application.library.commands.book_commands import CreateBookCommandHandler
+    return CreateBookCommandHandler(book_repo=get_book_repo(), author_repo=get_author_repo())
+
+def get_checkout_book_handler():
+    from src.application.library.commands.loan_commands import CheckoutBookCommandHandler
+    return CheckoutBookCommandHandler(loan_repo=get_loan_repo(), book_repo=get_book_repo())
+
+def get_return_book_handler():
+    from src.application.library.commands.loan_commands import ReturnBookCommandHandler
+    return ReturnBookCommandHandler(loan_repo=get_loan_repo(), book_repo=get_book_repo())
+
+# Queries
+def get_list_authors_handler():
+    from src.application.library.queries.library_queries import ListAuthorsQueryHandler
+    return ListAuthorsQueryHandler(author_repo=get_author_repo(), book_repo=get_book_repo())
+
+def get_list_available_books_handler():
+    from src.application.library.queries.library_queries import ListAvailableBooksQueryHandler
+    return ListAvailableBooksQueryHandler(book_repo=get_book_repo(), author_repo=get_author_repo())
+
+def get_list_user_loans_handler():
+    from src.application.library.queries.library_queries import ListUserLoansQueryHandler
+    return ListUserLoansQueryHandler(loan_repo=get_loan_repo(), book_repo=get_book_repo())
