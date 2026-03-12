@@ -148,5 +148,6 @@ class DjangoPostRepository(PostRepository, PostReadRepository):
             created_at=model.created_at,
             published_at=model.published_at,
             tags=model.tags or [],
+            category_id=model.category_id,
             comments=comments,
         )
