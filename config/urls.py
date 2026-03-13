@@ -15,6 +15,9 @@ urlpatterns = [
     path("api/auth/", include("src.interfaces.api.users.urls")),
     path("api/", include("src.interfaces.api.blog.urls")),
     
+    # Library API
+    path("api/library/", include("src.interfaces.api.library.urls")),
+    
     # OpenAPI Schema & Docs
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
