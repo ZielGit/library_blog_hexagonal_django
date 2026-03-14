@@ -12,4 +12,5 @@ class PersistenceConfig(AppConfig):
 
     def ready(self):
         """Se ejecuta cuando Django termina de cargar la app."""
-        pass
+        # Importar admin para registrar los modelos en Django Admin
+        import src.interfaces.admin.blog_admin  # noqa: F401
