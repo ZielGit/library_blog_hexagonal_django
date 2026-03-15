@@ -39,6 +39,7 @@ class PostDetailDTO:
     excerpt: str
     status: str
     author_id: UUID
+    category_id: UUID | None
     tags: list[str]
     comments: list[CommentDTO]
     created_at: datetime
@@ -55,6 +56,7 @@ class PostSummaryDTO:
     excerpt: str
     status: str
     author_id: UUID
+    category_id: UUID | None
     tags: list[str]
     created_at: datetime
     published_at: datetime | None
