@@ -9,6 +9,7 @@ from rest_framework import status
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestPostCreationFlow:
     """E2E: Flujo completo de creación de post."""
     
@@ -63,6 +64,7 @@ class TestPostCreationFlow:
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestPostPublishingFlow:
     """E2E: Flujo completo de publicación."""
     
@@ -118,6 +120,7 @@ class TestPostPublishingFlow:
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestCommentingFlow:
     """E2E: Flujo completo de comentarios."""
     
@@ -177,6 +180,7 @@ class TestCommentingFlow:
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestArchivingFlow:
     """E2E: Flujo completo de archivado."""
     
@@ -201,6 +205,7 @@ class TestArchivingFlow:
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestPaginationFlow:
     """E2E: Flujo de paginación."""
     
@@ -231,6 +236,7 @@ class TestPaginationFlow:
 
 
 @pytest.mark.django_db
+@pytest.mark.e2e
 class TestCompleteUserJourney:
     """E2E: Journey completo de usuario."""
     

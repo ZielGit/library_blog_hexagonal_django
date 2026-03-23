@@ -92,6 +92,7 @@ def _make_published_post(author_id=None):
 # ─────────────────────────────────────────────────────────────
 # CREATE POST
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestCreatePostCommandHandler:
     """Tests del handler CreatePost."""
 
@@ -150,6 +151,7 @@ class TestCreatePostCommandHandler:
 # ─────────────────────────────────────────────────────────────
 # PUBLISH POST
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestPublishPostCommandHandler:
     """Tests del handler PublishPost."""
 
@@ -228,6 +230,7 @@ class TestPublishPostCommandHandler:
 # ─────────────────────────────────────────────────────────────
 # ARCHIVE POST
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestArchivePostCommandHandler:
     """Tests del handler ArchivePost."""
 
@@ -285,6 +288,7 @@ class TestArchivePostCommandHandler:
 # ─────────────────────────────────────────────────────────────
 # ADD COMMENT
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestAddCommentCommandHandler:
     """Tests del handler AddComment."""
 
@@ -334,6 +338,7 @@ class TestAddCommentCommandHandler:
 # ─────────────────────────────────────────────────────────────
 # GET POST BY SLUG
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestGetPostBySlugQueryHandler:
     """Tests del handler GetPostBySlug."""
 
@@ -375,6 +380,7 @@ class TestGetPostBySlugQueryHandler:
 # ─────────────────────────────────────────────────────────────
 # GET POST BY ID
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestGetPostByIdQueryHandler:
     """Tests del handler GetPostById."""
 
@@ -409,6 +415,7 @@ class TestGetPostByIdQueryHandler:
 # ─────────────────────────────────────────────────────────────
 # LIST PUBLISHED POSTS
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestListPublishedPostsQueryHandler:
     """Tests del handler ListPublishedPosts."""
 
@@ -453,6 +460,7 @@ class TestListPublishedPostsQueryHandler:
 # ─────────────────────────────────────────────────────────────
 # LIST POSTS BY AUTHOR
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestListPostsByAuthorQueryHandler:
     """Tests del handler ListPostsByAuthor."""
 
@@ -479,6 +487,7 @@ class TestListPostsByAuthorQueryHandler:
 # ─────────────────────────────────────────────────────────────
 # EVENT HANDLERS
 # ─────────────────────────────────────────────────────────────
+@pytest.mark.unit
 class TestOnPostPublished:
     """Tests del event handler OnPostPublished."""
 
@@ -516,6 +525,7 @@ class TestOnPostPublished:
         )
 
 
+@pytest.mark.unit
 class TestOnCommentAdded:
     """Tests del event handler OnCommentAdded."""
 
@@ -549,6 +559,7 @@ class TestOnCommentAdded:
         )
 
 
+@pytest.mark.unit
 class TestOnPostArchived:
     """Tests del event handler OnPostArchived."""
 
@@ -577,6 +588,7 @@ class TestOnPostArchived:
         assert "occurred_at" in call_kw
 
 
+@pytest.mark.unit
 class TestOnPostCreated:
     """Tests del event handler OnPostCreated."""
 

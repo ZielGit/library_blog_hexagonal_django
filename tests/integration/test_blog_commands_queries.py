@@ -18,6 +18,7 @@ from src.infrastructure.persistence.models import PostModel, CommentModel
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestCreatePostCommand:
     """Tests de integración para CreatePostCommand."""
     
@@ -66,6 +67,7 @@ class TestCreatePostCommand:
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestPublishPostCommand:
     """Tests de integración para PublishPostCommand."""
     
@@ -123,6 +125,7 @@ class TestPublishPostCommand:
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestAddCommentCommand:
     """Tests de integración para AddCommentCommand."""
     
@@ -177,6 +180,7 @@ class TestAddCommentCommand:
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestArchivePostCommand:
     """Tests de integración para ArchivePostCommand."""
     
@@ -221,6 +225,7 @@ class TestArchivePostCommand:
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestGetPostBySlugQuery:
     """Tests de integración para GetPostBySlugQuery."""
     
@@ -252,6 +257,7 @@ class TestGetPostBySlugQuery:
 
 
 @pytest.mark.django_db
+@pytest.mark.integration
 class TestListPublishedPostsQuery:
     """Tests de integración para ListPublishedPostsQuery."""
     

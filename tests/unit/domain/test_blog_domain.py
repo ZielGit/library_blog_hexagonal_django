@@ -20,6 +20,7 @@ from src.domain.blog.exceptions import (
 )
 
 
+@pytest.mark.unit
 class TestPostAggregate:
     """Tests del agregado PostAggregate."""
     
@@ -182,6 +183,7 @@ class TestPostAggregate:
             )
 
 
+@pytest.mark.unit
 class TestTitle:
     """Tests del value object Title."""
     
@@ -207,6 +209,7 @@ class TestTitle:
             Title("a" * 201)
 
 
+@pytest.mark.unit
 class TestContent:
     """Tests del value object Content."""
     
@@ -233,6 +236,7 @@ class TestContent:
         assert not excerpt.endswith("...")
 
 
+@pytest.mark.unit
 class TestComment:
     """Tests de la entidad Comment."""
     

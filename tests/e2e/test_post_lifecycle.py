@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from django.test import TestCase
 
 
+@pytest.mark.e2e
 class TestPostLifecycleE2E(TestCase):
     """Test del flujo completo: register → login → create → publish → list"""
     
@@ -78,6 +79,7 @@ class TestPostLifecycleE2E(TestCase):
         assert response.json()['total'] == 0
 
 
+@pytest.mark.e2e
 class TestAuthenticationFlowE2E(TestCase):
     """Test del flujo de autenticación completo"""
     
@@ -112,6 +114,7 @@ class TestAuthenticationFlowE2E(TestCase):
         assert response.json()['email'] == "user@test.com"
 
 
+@pytest.mark.e2e
 class TestCommentWorkflowE2E(TestCase):
     """Test del flujo completo de comentarios"""
     

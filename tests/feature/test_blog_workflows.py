@@ -16,6 +16,7 @@ from src.domain.shared.base import DomainError
 
 
 @pytest.mark.django_db
+@pytest.mark.feature
 class TestPostLifecycle:
     """Feature: Ciclo de vida completo de un post."""
     
@@ -88,6 +89,7 @@ class TestPostLifecycle:
 
 
 @pytest.mark.django_db
+@pytest.mark.feature
 class TestPublishedPostsVisibility:
     """Feature: Visibilidad de posts según estado."""
     
@@ -157,6 +159,7 @@ class TestPublishedPostsVisibility:
 
 
 @pytest.mark.django_db
+@pytest.mark.feature
 class TestContentValidationRules:
     """Feature: Reglas de validación de contenido."""
     
@@ -211,6 +214,7 @@ class TestContentValidationRules:
 
 
 @pytest.mark.django_db
+@pytest.mark.feature
 class TestCommentingRules:
     """Feature: Reglas de comentarios."""
     
@@ -285,6 +289,7 @@ class TestCommentingRules:
 
 
 @pytest.mark.django_db
+@pytest.mark.feature
 class TestAuthorizationRules:
     """Feature: Reglas de autorización."""
     
