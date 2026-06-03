@@ -94,11 +94,15 @@ library_blog_hexagonal_django/
 │       └── admin/          # Admin de Django
 └── tests/
     ├── unit/                # Tests unitarios (sin BD)
-    │   └── domain/
-    │       └── test_blog_domain.py
+    │   ├── domain/
+    │   │   └── test_blog_domain.py
+    │   └── application/
+    │       └── test_blog_application.py
     ├── integration/         # Tests de integración (con BD)
-    │   └── test_blog_commands.py
-    └── e2e/                  # Tests end-to-end (flujos completos)
+    │   └── test_blog_commands_queries.py
+    ├── feature/             # Tests de característica (con BD)
+    │   └── test_blog_workflows.py
+    └── e2e/                 # Tests end-to-end (flujos completos)
         └── test_post_lifecycle.py
 ```
 
